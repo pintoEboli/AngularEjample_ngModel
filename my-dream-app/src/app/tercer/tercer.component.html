@@ -1,0 +1,151 @@
+<div style="color: red">
+    <div>{{ alumnnoComponent3.nombre }}</div>
+    <div>{{ alumnnoComponent3.apellido }}</div>
+    <div *ngIf="alumnnoComponent3.curso == 2013">Bienvenido al curso de angular</div>
+</div>
+<div>
+    <h2>{{ title2 }}</h2>
+    <div *ngFor="let nombre of nombres; let i=index">
+        <div [ngSwitch]="nombre.color">
+            <!-- Ojo en el case se coloca el valor dentro de '' para que se entere que la comparación es contra un String -->
+            <div *ngSwitchCase="'blue'" style="background-color: blue;margin-bottom: 5px;">
+                <span>nombre: {{ nombre.nom }}</span>
+            </div>
+            <div *ngSwitchCase="'red'" style="background-color: red;margin-bottom: 5px;">
+                <span>nombre: {{ nombre.nom }}</span>
+            </div>
+            <div *ngSwitchCase="'yellow'" style="background-color: yellow;margin-bottom: 5px;">
+                <span>nombre: {{ nombre.nom }}</span>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- con la directiva [ngClass] -->
+<hr>
+<div>
+    <h2>{{ title3 }}</h2>
+    <div *ngFor="let nombre of nombres; let i=index">
+        <div [ngSwitch]="nombre.color">
+            <!-- Ojo en el case se coloca el valor dentro de '' para que se entere que la comparación es contra un String -->
+            <div *ngSwitchCase="'blue'" [ngClass]="{'classBlue':nombre.color=='blue'}">
+                <span>nombre: {{ nombre.nom }}</span>
+            </div>
+            <div *ngSwitchCase="'red'" [ngClass]="{'classRed':nombre.color=='red'}">
+                <span [ngStyle]="{'color': color}">nombre: {{ nombre.nom }}</span>
+            </div>
+            <div *ngSwitchCase="'yellow'" [ngClass]="{'classYellow':nombre.color=='yellow'}">
+                <!-- Esta directiva esconde la etiqueta <HTML> pero no la elimina del arbol DOM -->
+                <span [hidden]="nombre.color=='yellow'">nombre: {{ nombre.nom }}</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- con la funcion click -->
+<hr>
+<div>
+    <h2>{{ title4 }}</h2>
+    <div *ngFor="let alumno of alumnos; let i=index">
+        <!-- Ojo en el case se coloca el valor dentro de '' para que se entere que la comparación es contra un String -->
+        <div>
+            <span id="{{ i }}">nombre: {{ alumno.nom }}</span>
+            <button (click)="eliminarDatos($event,i)">Delete</button>
+        </div>
+    </div>
+    <div [hidden]="arrayVacio">
+        <button (click)="cargarArr()">Cargar Array</button>
+    </div>
+</div>
+<hr>
+<!-- con Form Menos Utilzada -->
+
+<div>
+
+    <!--  
+        Id:<br>
+        <input #id type="text" name="id" id="id" >
+        <br>
+        Nombre:<br>
+        <input #nombreInput id="nombreInput" type="text" name="nombreInput" >
+        <br>
+        Apellido<br>
+        <input #apellidoInput id="apellidoInput" type="text" name="apellidoInput" >
+        <br>
+        Edad<br>
+        <input #edadInput id="edadInput" type="text" name="edadInput" >
+        <br>
+        Direccion<br>
+        <input #direccionInput id="direccionInput" type="text" name="direccionInput" >
+        <br>
+        <br>
+        <button (click)="finish()">Enviar</button>
+    -->
+
+</div>
+<!--
+  <hr>
+  <div>
+    <div *ngFor ="let alumnos of arrayAlumnos; let i=index" >
+      {{ alumnos.id }} - nombre:  {{  alumnos.nombre }}
+    </div>
+  </div>
+  -->
+<hr>
+<div>
+    <h2>Ejemplo con el ngModel:</h2>
+    <h3>Seleccione el tipo de objeto:</h3>
+    <select name="selectInput" (change)="mostrarForm()" [(ngModel)]="selectorModel">
+      <option value="" selected>Seleccionar</option>
+      <option id="alumnos" value="alumnos">Alumnos</option> 
+      <option id="profesores" value="profesores" selected>Profesores</option>
+    </select>
+    <span style="padding-top: 10px;"></span>
+    <h3>{{ titulo_seleccionado }}</h3>
+    <div *ngIf="mostrarAlumno">
+        Id:<br>
+        <input type="text" name="id" id="id" [attr.disabled]="disableId?'':null" [(ngModel)]="idModel">
+        <br> Nombre:
+        <br>
+        <input id="nombreInput" type="text" name="nombreInput" [(ngModel)]="nombreInputModel">
+        <br> Apellido
+        <br>
+        <input id="apellidoInput" type="text" name="apellidoInput" [(ngModel)]="apellidoInputModel">
+        <br> Edad
+        <br>
+        <input id="edadInput" type="text" name="edadInput" [(ngModel)]="edadInputModel">
+        <br> Direccion
+        <br>
+        <input #direccionInput id="direccionInput" type="text" name="direccionInput" [(ngModel)]="direccionInputModel">
+        <br>
+        <br>
+        <button (click)="finishModel()">Enviar</button>
+        <hr>
+
+    </div>
+    <div *ngIf="mostrarProfesor">
+        Id:<br>
+        <input type="text" name="idPro" id="idPro" [attr.disabled]="disableId?'':null" [(ngModel)]="idModelPro">
+        <br> Nombre del Profesor:<br>
+        <input id="nombreProfesorInput" type="text" name="nombreProfesorInput" [(ngModel)]="nombreProfesorInputModel">
+        <br> Curso
+        <br>
+        <input id="cursoInput" type="text" name="cursoInput" [(ngModel)]="cursoInputCurso">
+        <br>
+        <br>
+        <button (click)="finishModelProfesor()">Enviar</button>
+
+    </div>
+</div>
+<hr>
+<div>
+    <h3>Lista Profesores:</h3>
+    <div *ngFor="let profesores of arrayProfesor; let i=index">
+        {{ profesores.id }} - nombre: {{ profesores.nombre }} - Curso: {{ profesores.curso }}
+    </div>
+</div>
+<div>
+    <h3>Lista Alumnos:</h3>
+    <div *ngFor="let alumnos of arrayAlumnos; let i=index">
+        {{ alumnos.id }} - nombre: {{ alumnos.nombre }} - apellido: {{ alumnos.apellido }}
+    </div>
+</div>
